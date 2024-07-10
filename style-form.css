@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Old+English+Text+MT&family=Times+New+Roman&display=swap');
+
+.print-mt {
+    margin-top: 50px;
+}
+
+.logo {
+    width: 110px;
+}
+.line {
+    border-bottom: 1px solid black;
+}
+.table-form{
+    width: 100%;
+    margin-bottom: 3px;
+    vertical-align: top;
+    border-collapse: collapse;
+}
+.blackletter {
+    font-family: 'Old English Text MT', cursive;
+}
+
+.serif {
+    font-family: 'Times New Roman', serif;
+}
+.text-left-custom {
+    text-align: left;
+    padding-top: 16px;
+}
+.certify-text {
+    font-size: 20px;
+    text-indent: 70px;
+    padding: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
