@@ -1,0 +1,21 @@
+{
+  "frontPage": {
+    "backgroundImage": "./school.jpg",
+    "title": {
+      "text": "GuideCo",
+      "font": "Montserrat_900Black",
+      "fontSize": 50,
+      "color": "#FFFFFF",
+      "textAlign": "center"
+    },
+    "subtitle": {
+      "text": "Your Hub for expert Guidance and Counseling. Empower your journey to personal growth with our supportive insights and tools.",
+      "font": "Montserrat_900Black",
+      "fontSize": 10,
+      "color": "#FFFFFF",
+      "textAlign": "center",
+      "marginTop": 10,
+      "marginHorizontal": 20
+    }
+  }
+}
