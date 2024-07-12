@@ -1,28 +1,63 @@
-*{
+* {
     font-family: 'Poppins', sans-serif;
 }
-body {
-    background-color: #2b7d2f;
-}
-.login-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-}
-.show-password {
-    cursor: pointer;
-}
-.guide{
+
+.guide {
     color: #2b7d2f;
     font-weight: bold;
 }
-.co{
+
+.co {
     color: #959722;
     font-weight: bold;
 
 }
-.nav-link{
+
+.nav-link {
     font-weight: bold;
+}
+
+.logo-srcs {
+    height: 23px;
+    width: 97px;
+    background: none;
+    padding-top: 0;
+    font-size: 20px;
+}
+
+.app-header.header-text-light .app-header__logo .logo-srcs {
+    background: none
+}
+
+.app-header.header-text-dark .app-header__logo .logo-srcs {
+    background: none
+}
+
+.app-sidebar.sidebar-text-light .app-header__logo .logo-srcs {
+    background:none
+}
+
+.fixed-sidebar.closed-sidebar:not(.fixed-header) .app-sidebar .app-header__logo .logo-srcs {
+    display: none
+}
+
+.closed-sidebar:not(.closed-sidebar-mobile) .app-header .app-header__logo .logo-srcs {
+    display: none
+}
+
+.closed-sidebar.closed-sidebar-mobile .app-sidebar .app-header__logo .logo-srcs {
+    display: block !important;
+    margin: 0 auto;
+    width: 21px
+}
+
+.closed-sidebar.closed-sidebar-mobile .app-sidebar:hover .app-header__logo .logo-srcs {
+    width: 97px;
+    margin: 0
+}
+
+.sidebar-mobile-open .app-sidebar .app-header__logo .logo-srcs {
+    width: 97px !important;
+    margin-left: auto;
+    margin-right: 0
 }
