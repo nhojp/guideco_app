@@ -1,4 +1,14 @@
-<?php include "head.php";?>
+<?php include "head.php";
+include "conn.php";
+// Start session
+session_start();
+
+// Check if user is logged in and is an admin
+if (!isset($_SESSION['loggedin']) || !isset($_SESSION['admin'])) {
+    header('Location: index.php'); // Redirect if not logged in or not admin
+    exit;
+}?>
+
 
 <body>
     <?php include "admin-header.php"?>
@@ -671,41 +681,5 @@
                         </div>
                     </div>
                 </div>
-                <div class="app-wrapper-footer">
-                    <div class="app-footer">
-                        <div class="app-footer__inner">
-                            <div class="app-footer-left">
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 1
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 2
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="app-footer-right">
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 3
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            <div class="badge badge-success mr-1 ml-0">
-                                                <small>NEW</small>
-                                            </div>
-                                            Footer Link 4
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             <?php include "admin-footer.php"?>

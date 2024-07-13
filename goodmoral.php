@@ -14,7 +14,7 @@
                 <table class="table-form">
                     <tr>
                         <td class="text-center">
-                        <img class="logo" src="img\kagawaran_ng_edukasyon.png" alt="logo">
+                        <img class="logo" src="kagawaran_ng_edukasyon.png" alt="logo">
                         </td>
                     </tr>
                     <tr>
@@ -97,7 +97,7 @@
                         <table border="0" cellspacing="0" cellpadding="2">
                             <tr>
                                 <td>
-                                    <img class="logo" src="img/neshs.jpg" alt="logo">
+                                    <img class="logo" src="neshs.jpg" alt="logo">
                                 </td>
                                 <td>
                                     <table>
