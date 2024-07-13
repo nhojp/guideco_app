@@ -8,3 +8,10 @@ Sacdalan, Ferdinand Paulo Felices
 - Management Features
 - Text Messaging Features
 - ChatBot Features
+## How to run?
+- download this repo
+- open your xampp
+- import the database to your phpmyadmin
+- move this folder to the htdocs
+- open this http://localhost/guideco/index.php
+- username: admin && password: admin (to log in to guidance counselor)
