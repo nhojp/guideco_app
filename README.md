@@ -1,9 +1,11 @@
 # GuideCo 
 Development of Guidance and Counseling Information Management System for Nasugbu East Senior High School
-## Members
+## Team Members & Adviser
+- Adviser - Mr. Albert V. Paytaren
 - Manjac, John Paulmar Lontoc
 - Pedraza, Juspher Balagtas
-- Sacdalan, Ferdinand Paulo Felices 
+- Sacdalan, Ferdinand Paulo Felices
+- Quiroz, Frederik Nicoll Lapitan
 ## Functionalities
 - Dashboard
 - Printing Good Moral Template
