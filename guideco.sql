@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2024 at 05:24 PM
+-- Generation Time: Jul 15, 2024 at 02:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -175,6 +175,48 @@ INSERT INTO `complaints_student` (`id`, `victimFirstName`, `victimMiddleName`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `grades`
+--
+
+CREATE TABLE `grades` (
+  `id` int(11) NOT NULL,
+  `grade_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `grades`
+--
+
+INSERT INTO `grades` (`id`, `grade_name`) VALUES
+(1, 'Grade 11'),
+(2, 'Grade 12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guards`
+--
+
+CREATE TABLE `guards` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `guards`
+--
+
+INSERT INTO `guards` (`id`, `username`, `password`, `first_name`, `middle_name`, `last_name`) VALUES
+(3, 'guard3', 'password3', 'Michael', '', 'Wilson'),
+(4, 'guard', 'guard', 'ferdinand', NULL, 'sacdalan');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `personalinformation`
 --
 
@@ -236,6 +278,78 @@ INSERT INTO `questions` (`id`, `question`, `answer`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sections`
+--
+
+CREATE TABLE `sections` (
+  `id` int(11) NOT NULL,
+  `section_name` varchar(10) NOT NULL,
+  `grade_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sections`
+--
+
+INSERT INTO `sections` (`id`, `section_name`, `grade_id`) VALUES
+(1, 'earth', 1),
+(2, 'Venus', 1),
+(3, 'C', 1),
+(4, 'A', 2),
+(5, 'B', 2),
+(6, 'C', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `middle_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` enum('Male','Female') NOT NULL,
+  `section_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `first_name`, `middle_name`, `last_name`, `age`, `sex`, `section_id`) VALUES
+(1, 'John', 'Doe', '', 17, 'Male', 1),
+(2, 'Jane', 'Smith', '', 16, 'Female', 1),
+(3, 'Michael', '', 'Johnson', 18, 'Male', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `username`, `password`, `first_name`, `middle_name`, `last_name`) VALUES
+(4, 'teacher', 'teacher', 'juspher ', NULL, 'pedraza'),
+(7, 'teacheraa', 'teacher', 'juspher ', NULL, 'pedraza');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -287,6 +401,19 @@ ALTER TABLE `complaints_student`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `grades`
+--
+ALTER TABLE `grades`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `guards`
+--
+ALTER TABLE `guards`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `personalinformation`
 --
 ALTER TABLE `personalinformation`
@@ -298,6 +425,27 @@ ALTER TABLE `personalinformation`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sections`
+--
+ALTER TABLE `sections`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `grade_id` (`grade_id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `section_id` (`section_id`);
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `users`
@@ -328,6 +476,18 @@ ALTER TABLE `complaints_student`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `guards`
+--
+ALTER TABLE `guards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `personalinformation`
 --
 ALTER TABLE `personalinformation`
@@ -338,6 +498,24 @@ ALTER TABLE `personalinformation`
 --
 ALTER TABLE `questions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `sections`
+--
+ALTER TABLE `sections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -354,6 +532,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `personalinformation`
   ADD CONSTRAINT `personalinformation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `sections`
+--
+ALTER TABLE `sections`
+  ADD CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`);
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
