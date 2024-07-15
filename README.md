@@ -1,12 +1,13 @@
 # GuideCo 
 Development of Guidance and Counseling Information Management System for Nasugbu East Senior High School
-## Team Members & Adviser
-- Adviser - Mr. Albert V. Paytaren
+## Adviser
+- Mr. Albert V. Paytaren
+## Team Members 
 - Manjac, John Paulmar Lontoc
 - Pedraza, Juspher Balagtas
 - Sacdalan, Ferdinand Paulo Felices
 - Quiroz, Frederik Nicoll Lapitan
-## Requirements
+## Features 
 - Dashboard
 - Printing Good Moral Template
 - Printing Annex A Template
@@ -20,6 +21,9 @@ Development of Guidance and Counseling Information Management System for Nasugbu
 - Recommender (Descriptive Analytics)
 ## Flow of Requirements
 ---
+## Technolody Used
+- ChatGPT API
+- 
 ## How to run?
 - download this repo
 - open your xampp
