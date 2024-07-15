@@ -6,7 +6,7 @@ Development of Guidance and Counseling Information Management System for Nasugbu
 - Pedraza, Juspher Balagtas
 - Sacdalan, Ferdinand Paulo Felices
 - Quiroz, Frederik Nicoll Lapitan
-## Functionalities
+## Requirements
 - Dashboard
 - Printing Good Moral Template
 - Printing Annex A Template
@@ -18,6 +18,8 @@ Development of Guidance and Counseling Information Management System for Nasugbu
 - Calendar Scheduling
 - Chatbot (GuideBot)
 - Recommender (Descriptive Analytics)
+## Flow of Requirements
+---
 ## How to run?
 - download this repo
 - open your xampp
