@@ -1,9 +1,9 @@
 # GuideCo 
 Development of Guidance and Counseling Information Management System for Nasugbu East Senior High School
 ## Members
-Manjac, John Paulmar Lontoc
-Pedraza, Juspher Balagtas
-Sacdalan, Ferdinand Paulo Felices 
+- Manjac, John Paulmar Lontoc
+- Pedraza, Juspher Balagtas
+- Sacdalan, Ferdinand Paulo Felices 
 ## Functionalities
 - Dashboard
 - Printing Good Moral Template
@@ -13,6 +13,9 @@ Sacdalan, Ferdinand Paulo Felices
 - Teachers Reporting (On going)
 - Email Verification for Reset Password (On going)
 - SMS Functionality (On going)
+- Calendar Scheduling
+- Chatbot (GuideBot)
+- Recommender (Descriptive Analytics)
 ## How to run?
 - download this repo
 - open your xampp
