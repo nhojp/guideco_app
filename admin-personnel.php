@@ -298,4 +298,4 @@ include "admin-header.php"
     </form>
 </div>
 
-<?php include "admin-footer.php" ?>
+<?php include "admin-footer.php"; include "footer.php"?>

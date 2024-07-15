@@ -268,6 +268,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
     });
 </script>
 
-<?php include "admin-footer.php"; // Include your admin footer file 
-?>
+<?php include "admin-footer.php"; include "footer.php"?>?>
 <?php $conn->close(); ?>

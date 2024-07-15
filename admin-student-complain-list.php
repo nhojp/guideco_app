@@ -162,8 +162,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
                                 </td>
                             </tr>
 
-<!-- View Modal -->
-<div class="modal fade" id="viewModal<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
+                            <!-- View Modal -->
+                            <div class="modal fade" id="viewModal<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <!-- Modal content for viewing details goes here -->
@@ -315,11 +315,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById('searchInput');
         const rows = document.querySelectorAll("tbody tr");
 
-        searchInput.addEventListener("input", function () {
+        searchInput.addEventListener("input", function() {
             const searchTerm = searchInput.value.toLowerCase().trim();
 
             rows.forEach(row => {
@@ -336,8 +336,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
     });
 </script>
 
-<?php include "admin-footer.php"; ?>
-
+<?php include "admin-footer.php";
+include "footer.php" ?>
 <?php
 $conn->close();
 ?>

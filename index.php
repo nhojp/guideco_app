@@ -21,6 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_admin = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
     $result_admin = $conn->query($sql_admin);
 
+    // SQL query to fetch user details from the teachers table
+    $sql_teacher = "SELECT * FROM teachers WHERE username = '$username' AND password = '$password'";
+    $result_teacher = $conn->query($sql_teacher);
+
+    // SQL query to fetch user details from the guards table
+    $sql_guard = "SELECT * FROM guards WHERE username = '$username' AND password = '$password'";
+    $result_guard = $conn->query($sql_guard);
+
     if ($result_user && $result_user->num_rows == 1) {
         // User found in the users table
         $user = $result_user->fetch_assoc();
@@ -42,6 +50,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Redirect to admin-index.php or refresh the current page to display admin info
         header("Location: admin-index.php");
         exit;
+    } elseif ($result_teacher && $result_teacher->num_rows == 1) {
+        // Teacher found in the teachers table
+        $teacher = $result_teacher->fetch_assoc();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        $_SESSION['teacher'] = true;
+        $_SESSION['teacher_id'] = $teacher['id']; // Save teacher id in session
+
+        // Redirect to teacher-index.php or refresh the current page to display teacher info
+        header("Location: teacher-index.php");
+        exit;
+    } elseif ($result_guard && $result_guard->num_rows == 1) {
+        // Guard found in the guards table
+        $guard = $result_guard->fetch_assoc();
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $username;
+        $_SESSION['guard'] = true;
+        $_SESSION['guard_id'] = $guard['id']; // Save guard id in session
+
+        // Redirect to guard-index.php or refresh the current page to display guard info
+        header("Location: guard-index.php");
+        exit;
     } else {
         // Invalid username or password, show error message
         $error_message = "Invalid username or password!";
@@ -54,6 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (isset($_SESSION['loggedin'])) {
     $user_id = $_SESSION['user_id'] ?? null;
     $admin_id = $_SESSION['admin_id'] ?? null;
+    $teacher_id = $_SESSION['teacher_id'] ?? null;
+    $guard_id = $_SESSION['guard_id'] ?? null;
 
     if ($user_id) {
         // Fetch user data
@@ -64,7 +96,6 @@ if (isset($_SESSION['loggedin'])) {
             $row_user = $result_fetch_user->fetch_assoc();
             $first_name = $row_user['first_name'];
             $last_name = $row_user['last_name'];
-            
         }
     } elseif ($admin_id) {
         // Fetch admin data
@@ -77,9 +108,30 @@ if (isset($_SESSION['loggedin'])) {
             $last_name = $row_admin['last_name'];
             $position = $row_admin['position'];
         }
+    } elseif ($teacher_id) {
+        // Fetch teacher data
+        $sql_fetch_teacher = "SELECT * FROM teachers WHERE id = $teacher_id";
+        $result_fetch_teacher = $conn->query($sql_fetch_teacher);
+
+        if ($result_fetch_teacher->num_rows == 1) {
+            $row_teacher = $result_fetch_teacher->fetch_assoc();
+            $first_name = $row_teacher['first_name'];
+            $last_name = $row_teacher['last_name'];
+        }
+    } elseif ($guard_id) {
+        // Fetch guard data
+        $sql_fetch_guard = "SELECT * FROM guards WHERE id = $guard_id";
+        $result_fetch_guard = $conn->query($sql_fetch_guard);
+
+        if ($result_fetch_guard->num_rows == 1) {
+            $row_guard = $result_fetch_guard->fetch_assoc();
+            $first_name = $row_guard['first_name'];
+            $last_name = $row_guard['last_name'];
+        }
     }
 }
 ?>
+
 
 <?php include "head.php"; ?>
 

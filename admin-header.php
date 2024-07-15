@@ -80,28 +80,33 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
                         <div class="widget-content-wrapper">
+
                             <div class="widget-content-left">
-                                <div class="btn-group">
-                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                        <button type="button" tabindex="0" class="dropdown-item">User Account</button>
-                                        <button type="button" tabindex="0" class="dropdown-item">Settings</button>
-                                        <h6 tabindex="-1" class="dropdown-header">Header</h6>
-                                        <button type="button" tabindex="0" class="dropdown-item">Actions</button>
-                                        <div tabindex="-1" class="dropdown-divider"></div>
-                                        <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                    <div class="widget-content-left  ml-3 header-user-info">
+                                        <div class="widget-heading">
+                                            <?php echo $first_name . ' ' . $last_name; ?>
+                                        </div>
+                                        <div class="widget-subheading">
+                                            <?php echo $position; ?>
+                                        </div>
                                     </div>
+                                </a>
+                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="credentials.php">
+                                        <i class="fa fa-user-circle mr-2"></i> My Account
+                                    </a>
+                                    <a class="dropdown-item" href="admin-users.php">
+                                        <i class="fa fa-user-circle mr-2"></i> Users
+                                    </a>
+                                    <div tabindex="-1" class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" href="logout.php">
+                                        <i class="fa fa-sign-out-alt mr-2"></i> Logout
+                                    </a>
                                 </div>
+
                             </div>
 
-                            <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <?php echo $first_name . ' ' . $last_name; ?>
-                                </div>
-                                <div class="widget-subheading">
-                                    <?php echo $position; ?>
-                                </div>
-
-                            </div>
                             <div class="widget-content-right header-user-info ml-3">
                                 <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
                                     <i class="fa text-white fa-calendar pr-1 pl-1"></i>
@@ -430,17 +435,19 @@ if (isset($_SESSION['loggedin'])) {
                         <li class="app-sidebar__heading">Dashboards</li>
                         <li>
                             <a href="admin-index.php">
-                                <i class="metismenu-icon pe-7s-rocket"></i>
+                                <i class="metismenu-icon fas fa-tachometer-alt"></i>
                                 Incidents
                             </a>
+
                         </li>
                         <li class="app-sidebar__heading">Complaint</li>
                         <li>
                             <a href="#">
-                                <i class="metismenu-icon pe-7s-diamond"></i>
+                                <i class="metismenu-icon fas fa-edit"></i>
                                 Create Complaints
-                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                <i class="metismenu-state-icon fas fa-caret-down"></i>
                             </a>
+
                             <ul>
                                 <li>
                                     <a href="admin-personnel.php">
@@ -458,10 +465,11 @@ if (isset($_SESSION['loggedin'])) {
                         </li>
                         <li>
                             <a href="#">
-                                <i class="metismenu-icon pe-7s-car"></i>
+                                <i class="metismenu-icon fas fa-list-alt"></i>
                                 Complaints List
-                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                <i class="metismenu-state-icon fas fa-caret-down"></i>
                             </a>
+
                             <ul>
                                 <li>
                                     <a href="admin-personnel-complain-list.php">
@@ -481,26 +489,35 @@ if (isset($_SESSION['loggedin'])) {
                         <li class="app-sidebar__heading">Violations</li>
                         <li>
                             <a href="dashboard-boxes.html">
-                                <i class="metismenu-icon pe-7s-display2"></i>
+                                <i class="metismenu-icon fas fa-exclamation-triangle"></i>
                                 Major
                             </a>
                             <a href="dashboard-boxes.html">
-                                <i class="metismenu-icon pe-7s-display2"></i>
+                                <i class="metismenu-icon fas fa-exclamation-circle"></i>
                                 Minor
                             </a>
+
                         </li>
-                        <li class="app-sidebar__heading">Settings</li>
+                        <li class="app-sidebar__heading">Management</li>
                         <li>
-                            <a href="credentials.php">
-                                <i class="metismenu-icon pe-7s-mouse">
-                                </i>Change Credentials
+                            <a href="#">
+                                <i class="metismenu-icon fas fa-edit"></i>
+                                Settings <i class="metismenu-state-icon fas fa-caret-down"></i>
                             </a>
-                        </li>
-                        <li>
-                            <a href="logout.php">
-                                <i class="metismenu-icon pe-7s-eyedropper">
-                                </i>Logout
-                            </a>
+
+                            <ul>
+                                <li>
+                                    <a href="admin-users.php">
+                                        <i class="metismenu-icon"></i>
+                                        Users </a>
+                                </li>
+                                <li>
+                                    <a href="admin-section.php">
+                                        <i class="metismenu-icon">
+                                        </i>Section List
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                     </ul>

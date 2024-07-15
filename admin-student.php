@@ -380,4 +380,4 @@ include "admin-header.php";
 
 </div>
 
-<?php include "admin-footer.php" ?>
+<?php include "admin-footer.php"; include "footer.php"?>
