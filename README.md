@@ -5,9 +5,14 @@ Manjac, John Paulmar Lontoc
 Pedraza, Juspher Balagtas
 Sacdalan, Ferdinand Paulo Felices 
 ## Functionalities
-- Management Features
-- Text Messaging Features
-- ChatBot Features
+- Dashboard
+- Printing Good Moral Template
+- Printing Annex A Template
+- Fill up form
+- Security Guards Reporting (On going)
+- Teachers Reporting (On going)
+- Email Verification for Reset Password (On going)
+- SMS Functionality (On going)
 ## How to run?
 - download this repo
 - open your xampp
