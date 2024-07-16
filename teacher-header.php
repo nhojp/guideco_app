@@ -91,7 +91,7 @@ if (isset($_SESSION['loggedin'])) {
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true"
                                     class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="teacher-credentials.php">
+                                    <a class="dropdown-item" href="credentials.php">
                                         <i class="fa fa-user-circle mr-2"></i> My Account
                                     </a>
 
@@ -526,7 +526,7 @@ if (isset($_SESSION['loggedin'])) {
                         <li class="app-sidebar__heading">Account Management</li>
                         
                         <li>
-                            <a href="teacher-credentials.php">
+                            <a href="credentials.php">
                                 <i class="metismenu-icon fa fa-user-circle"></i>
                                 My Account
                             </a>

@@ -10,6 +10,21 @@ if (!isset($_SESSION['loggedin']) || !isset($_SESSION['admin'])) {
     exit;
 }
 
+// Handle deletion request
+if (isset($_POST['delete_id'])) {
+    $delete_id = $_POST['delete_id'];
+
+    // SQL query to delete violation
+    $delete_query = "DELETE FROM violations WHERE id = '$delete_id'";
+    $delete_result = mysqli_query($conn, $delete_query);
+
+    if (!$delete_result) {
+        die("Deletion failed: " . mysqli_error($conn));
+    }
+
+    exit;
+}
+
 // SQL query to fetch violations data from both guards and teachers
 $query = "
     SELECT violations.id, students.first_name, students.middle_name, students.last_name, 
@@ -41,6 +56,7 @@ if (!$result) {
     die("Query failed: " . mysqli_error($conn));
 }
 ?>
+
 
 <div class="container-fluid mt-2 mb-5">
     <div class="container-fluid bg-white pt-4 rounded-lg">
@@ -126,16 +142,17 @@ if (!$result) {
 
     <div class="container-fluid bg-white p-4 rounded-lg mt-2">
         <div class="table-responsive">
-            <table id="violations_table" class="table table-bordered table-striped">
+            <table id="violations_table" class="table table-bordered table-striped text-center">
                 <thead>
                     <tr>
-                        <th>Full Name</th>
-                        <th>Grade</th>
-                        <th>Section</th>
-                        <th>Violation</th>
-                        <th style="display: none;">Reported By Type</th>
-                        <th>Reported By Name</th>
-                        <th>Reported At</th>
+                        <th style="width:35%;">Name</th>
+                        <th style="width:9%;">Grade</th>
+                        <th style="width:5%;">Section</th>
+                        <th style="width:20%;">Violation</th>
+                        <th style="display: none;"></th>
+                        <th style="width:16%;">Reported by</th>
+                        <th style="width:15%;">Reported at</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,6 +165,11 @@ if (!$result) {
                             <td style="display: none;"><?php echo ucfirst($row['reported_by_type']); ?></td>
                             <td><?php echo ucfirst($row['reported_by_name']); ?></td>
                             <td><?php echo $row['reported_at']; ?></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm delete-violation" data-id="<?php echo $row['id']; ?>" data-toggle="modal" data-target="#confirmDeleteModal">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
@@ -156,31 +178,71 @@ if (!$result) {
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
-<?php include 'admin-footer.php'; ?>
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this violation?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post" action="">
+                    <input type="hidden" name="delete_id" id="delete_id" value="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
-        // Filter functionality
-        $('#filter_grade, #filter_section, #filter_reported_by_type, #filter_violation').change(filterViolations);
+        $('.delete-violation').click(function() {
+            var deleteId = $(this).data('id');
+            $('#delete_id').val(deleteId);
+        });
 
-        function filterViolations() {
-            var gradeFilter = $('#filter_grade').val();
-            var sectionFilter = $('#filter_section').val();
-            var reportedByTypeFilter = $('#filter_reported_by_type').val().toLowerCase(); // Convert to lowercase for comparison
-            var violationFilter = $('#filter_violation').val().toLowerCase(); // Convert to lowercase for comparison
+        $('#confirmDeleteModal').on('hide.bs.modal', function() {
+            $('#delete_id').val('');
+        });
+
+        $('#searchInput').on('input', function() {
+            var searchTerm = $(this).val().toLowerCase();
+
+            $('#violations_table tbody tr').each(function() {
+                var name = $(this).find('td:first').text().toLowerCase();
+                var violation = $(this).find('td:nth-child(4)').text().toLowerCase();
+
+                if (name.includes(searchTerm) || violation.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        $('#filter_grade, #filter_section, #filter_reported_by_type, #filter_violation').change(function() {
+            applyFilters();
+        });
+
+        function applyFilters() {
+            var gradeFilter = $('#filter_grade').val().toLowerCase();
+            var sectionFilter = $('#filter_section').val().toLowerCase();
+            var reportedByTypeFilter = $('#filter_reported_by_type').val().toLowerCase();
+            var violationFilter = $('#filter_violation').val().toLowerCase();
 
             $('#violations_table tbody tr').each(function() {
                 var grade = $(this).data('grade');
                 var section = $(this).data('section');
                 var reportedByType = $(this).data('reported-by-type');
                 var violation = $(this).data('violation');
-
-                // Convert data attributes to lowercase for case-insensitive comparison
-                grade = grade ? grade.toLowerCase() : '';
-                section = section ? section.toLowerCase() : '';
-                reportedByType = reportedByType ? reportedByType.toLowerCase() : '';
-                violation = violation ? violation.toLowerCase() : '';
 
                 var gradeMatch = (gradeFilter === '' || grade === gradeFilter.toLowerCase());
                 var sectionMatch = (sectionFilter === '' || section === sectionFilter.toLowerCase());
@@ -196,3 +258,4 @@ if (!$result) {
         }
     });
 </script>
+<?php include "footer.php"; include "admin-footer.php"?>

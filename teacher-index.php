@@ -44,6 +44,25 @@ if (!$grades_result) {
     die("Query failed: " . mysqli_error($conn));
 }
 
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $student_id = $_POST['student_id'];
+    $violation = $_POST['violation'];
+    $teacher_id = $_SESSION['teacher_id'];
+
+    $query = "INSERT INTO violations (student_id, violation, teacher_id) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("isi", $student_id, $violation, $teacher_id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        echo "<div class='alert alert-success' role='alert'>Violation reported successfully.</div>";
+    } else {
+        echo "<div class='alert alert-danger' role='alert'>Failed to report violation.</div>";
+    }
+
+    $stmt->close();
+}
 // Reset result set pointers
 mysqli_data_seek($sections_result, 0);
 mysqli_data_seek($grades_result, 0);

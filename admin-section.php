@@ -14,9 +14,10 @@ include "admin-header.php";
 // Function to fetch all sections data
 function getAllSectionsData($conn, $filterGrade = null)
 {
-    $sql = "SELECT sections.*, grades.grade_name 
+    $sql = "SELECT sections.*, grades.grade_name, teachers.first_name AS teacher_first_name, teachers.last_name AS teacher_last_name
             FROM sections 
-            LEFT JOIN grades ON sections.grade_id = grades.id";
+            LEFT JOIN grades ON sections.grade_id = grades.id
+            LEFT JOIN teachers ON sections.teacher_id = teachers.id";
 
     // Append WHERE clause if filter grade is selected
     if (!empty($filterGrade)) {
@@ -43,6 +44,18 @@ function getAllGradeNames($conn)
     return $grades;
 }
 
+// Function to fetch all teachers for dropdown
+function getAllTeachers($conn)
+{
+    $sql = "SELECT id, first_name, last_name FROM teachers";
+    $result = mysqli_query($conn, $sql);
+    $teachers = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $teachers[] = $row;
+    }
+    return $teachers;
+}
+
 $editSuccess = isset($_SESSION['edit_success']) ? $_SESSION['edit_success'] : false;
 $addSuccess = isset($_SESSION['add_success']) ? $_SESSION['add_success'] : false;
 $errorMessage = '';
@@ -51,8 +64,9 @@ $errorMessage = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_section_name'])) {
     $sectionId = $_POST['edit_section_id'];
     $sectionName = $_POST['edit_section_name'];
+    $teacherId = $_POST['edit_teacher_id'];
 
-    $updateSql = "UPDATE sections SET section_name = '$sectionName' WHERE id = $sectionId";
+    $updateSql = "UPDATE sections SET section_name = '$sectionName', teacher_id = $teacherId WHERE id = $sectionId";
 
     if (mysqli_query($conn, $updateSql)) {
         $_SESSION['edit_success'] = true;
@@ -63,11 +77,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_section_name'])) 
 }
 
 // Add new section functionality
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['section_name']) && isset($_POST['grade_id'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['section_name']) && isset($_POST['grade_id']) && isset($_POST['teacher_id'])) {
     $sectionName = $_POST['section_name'];
     $gradeId = $_POST['grade_id'];
+    $teacherId = $_POST['teacher_id'];
 
-    $insertSql = "INSERT INTO sections (section_name, grade_id) VALUES ('$sectionName', $gradeId)";
+    $insertSql = "INSERT INTO sections (section_name, grade_id, teacher_id) VALUES ('$sectionName', $gradeId, $teacherId)";
 
     if (mysqli_query($conn, $insertSql)) {
         $_SESSION['add_success'] = true;
@@ -85,8 +100,8 @@ unset($_SESSION['add_success']);
 $filterGrade = isset($_GET['filter_grade']) ? $_GET['filter_grade'] : null;
 $sectionsData = getAllSectionsData($conn, $filterGrade);
 $grades = getAllGradeNames($conn);
+$teachers = getAllTeachers($conn);
 ?>
-
 <style>
     .modal-custom {
         margin-top: 100px;
@@ -100,7 +115,6 @@ $grades = getAllGradeNames($conn);
         }
     }
 </style>
-
 <div class="container-fluid mt-2 mb-5">
     <div class="container-fluid bg-white pt-4 rounded-lg">
         <div class="row">
@@ -116,7 +130,6 @@ $grades = getAllGradeNames($conn);
                     <button class="close"></button>
                 </div>
             </div>
-            
         </div>
     </div>
 
@@ -144,85 +157,102 @@ $grades = getAllGradeNames($conn);
     <?php endif; ?>
 
     <div class="container-fluid bg-white p-4 rounded-lg mt-2">
-<div class="row">
-    <div class="col-md-12">
-    <button type="button" class="btn btn-success btn-block p-4 mb-2" data-toggle="modal" data-target="#addSectionModal">
-                <i class="fas fa-plus"></i> Add Section
-            </button>
-    </div>
-</div>
         <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success btn-block p-4 mb-2" data-toggle="modal" data-target="#addSectionModal">
+                    <i class="fas fa-plus"></i> Add Section
+                </button>
+            </div>
+        </div>
 
+        <!-- Modal for adding a section -->
+        <div class="modal fade modal-custom" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog modal-custom" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSectionModalLabel">Add Section</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form for adding a section -->
+                        <form method="POST" action="">
+                            <div class="form-group">
+                                <label for="sectionName">Section Name</label>
+                                <input type="text" class="form-control" id="sectionName" name="section_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gradeFilter">Filter by Grade</label>
+                                <select class="form-control" id="gradeFilter">
+                                    <option value="">All Grades</option>
+                                    <?php foreach ($grades as $grade) : ?>
+                                        <option value="<?php echo $grade['id']; ?>"><?php echo $grade['grade_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-            <!-- Modal for adding a section -->
-            <div class="modal fade" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel" aria-hidden="true" data-backdrop="false">
-                <div class="modal-dialog modal-custom" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addSectionModalLabel">Add Section</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Form for adding a section -->
-                            <form method="POST" action="">
-                                <div class="form-group">
-                                    <label for="sectionName">Section Name</label>
-                                    <input type="text" class="form-control" id="sectionName" name="section_name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gradeSelect">Select Grade</label>
-                                    <select class="form-control" id="gradeSelect" name="grade_id" required>
-                                        <option value="">Select Grade</option>
-                                        <?php foreach ($grades as $grade) : ?>
-                                            <option value="<?php echo $grade['id']; ?>"><?php echo $grade['grade_name']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Add Section</button>
-                            </form>
-                        </div>
+                            <div class="form-group">
+                                <label for="teacherSelect">Select Adviser</label>
+                                <select class="form-control" id="teacherSelect" name="teacher_id" required>
+                                    <option value="">Select Teacher</option>
+                                    <?php foreach ($teachers as $teacher) : ?>
+                                        <option value="<?php echo $teacher['id']; ?>"><?php echo $teacher['first_name'] . ' ' . $teacher['last_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Section</button>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead>
                         <tr>
-                            <th style="width: 70%;">Section Name</th>
+                            <th style="width: 60%;">Section Name</th>
                             <th style="width: 20%;">
-                                <form method="GET" action="">
-                                    <select class="form-control" name="filter_grade" onchange="this.form.submit()">
-                                        <option value="">All</option>
-                                        <?php foreach ($grades as $grade) : ?>
-                                            <option value="<?php echo $grade['id']; ?>" <?php echo ($filterGrade == $grade['id']) ? 'selected' : ''; ?>>
-                                                <?php echo $grade['grade_name']; ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </form>
+                                <select class="form-control" id="gradeFilterTable">
+                                    <option value="">All Grades</option>
+                                    <?php foreach ($grades as $grade) : ?>
+                                        <option value="<?php echo $grade['id']; ?>"><?php echo $grade['grade_name']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </th>
+                            <th style="width: 20%;">Teacher (Adviser)</th>
                             <th style="width: 10%;">Edit</th>
+
                         </tr>
                     </thead>
-                    <tbody class="text-center">
+                    <tbody class="text-center" id="sectionsTableBody">
                         <?php foreach ($sectionsData as $section) : ?>
-                            <tr>
+                            <tr class="grade-<?php echo $section['grade_id']; ?>">
                                 <td><?php echo ucfirst($section['section_name']); ?></td>
                                 <td><?php echo ucfirst($section['grade_name']); ?></td>
-
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal<?php echo $section['id']; ?>">
+                                    <?php
+                                    if (!empty($section['teacher_first_name']) && !empty($section['teacher_last_name'])) {
+                                        echo ucfirst($section['teacher_first_name']) . ' ' . ucfirst($section['teacher_last_name']);
+                                    } else {
+                                        echo 'Not Assigned';
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editSectionModal<?php echo $section['id']; ?>">
                                         Edit
                                     </button>
-                                    <!-- Edit Modal -->
-                                    <div class="modal fade" id="editModal<?php echo $section['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editModalLabel<?php echo $section['id']; ?>" aria-hidden="true" data-backdrop="false">
+
+                                    <!-- Modal for editing a section -->
+                                    <div class="modal fade modal-custom" id="editSectionModal<?php echo $section['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editSectionModalLabel" aria-hidden="true" data-backdrop="false">
                                         <div class="modal-dialog modal-custom" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editModalLabel<?php echo $section['id']; ?>">Edit Section Name</h5>
+                                                    <h5 class="modal-title" id="editSectionModalLabel">Edit Section</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -230,11 +260,22 @@ $grades = getAllGradeNames($conn);
                                                 <div class="modal-body">
                                                     <!-- Form for editing a section -->
                                                     <form method="POST" action="">
+                                                        <input type="hidden" name="edit_section_id" value="<?php echo $section['id']; ?>">
                                                         <div class="form-group">
                                                             <label for="editSectionName">Section Name</label>
                                                             <input type="text" class="form-control" id="editSectionName" name="edit_section_name" value="<?php echo $section['section_name']; ?>" required>
                                                         </div>
-                                                        <input type="hidden" name="edit_section_id" value="<?php echo $section['id']; ?>">
+                                                        <div class="form-group">
+                                                            <label for="editTeacherSelect">Select Adviser</label>
+                                                            <select class="form-control" id="editTeacherSelect" name="edit_teacher_id" required>
+                                                                <option value="">Select Teacher</option>
+                                                                <?php foreach ($teachers as $teacher) : ?>
+                                                                    <option value="<?php echo $teacher['id']; ?>" <?php echo ($teacher['id'] == $section['teacher_id']) ? 'selected' : ''; ?>>
+                                                                        <?php echo $teacher['first_name'] . ' ' . $teacher['last_name']; ?>
+                                                                    </option>
+                                                                <?php endforeach; ?>
+                                                            </select>
+                                                        </div>
                                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                                     </form>
                                                 </div>
@@ -251,29 +292,34 @@ $grades = getAllGradeNames($conn);
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        const searchInput = document.getElementById('searchInput');
-        const rows = document.querySelectorAll("tbody tr");
-
-        searchInput.addEventListener("input", function() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-
-            rows.forEach(row => {
-                const sectionName = row.cells[0].textContent.toLowerCase();
-                const gradeName = row.cells[1].textContent.toLowerCase();
-
-                if (sectionName.includes(searchTerm) || gradeName.includes(searchTerm)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    });
-</script>
-
 <?php
 include "admin-footer.php";
 include "footer.php";
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Filter sections by grade in table header dropdown
+        $('#gradeFilterTable').change(function() {
+            var selectedGrade = $(this).val();
+            if (selectedGrade == '') {
+                $('#sectionsTableBody tr').show(); // Show all rows if "All Grades" is selected
+            } else {
+                $('#sectionsTableBody tr').hide(); // Hide all rows initially
+                $('#sectionsTableBody tr.grade-' + selectedGrade).show(); // Show rows matching the selected grade
+            }
+        });
+
+        // Filter sections by grade in modal dropdown
+        $('#gradeFilter').change(function() {
+            var selectedGrade = $(this).val();
+            if (selectedGrade == '') {
+                $('#teacherSelect option').show(); // Show all teachers if "All Grades" is selected
+            } else {
+                $('#teacherSelect option').hide(); // Hide all teachers initially
+                $('#teacherSelect option[data-grade="' + selectedGrade + '"]').show(); // Show teachers for the selected grade
+            }
+        });
+    });
+</script>

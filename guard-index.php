@@ -43,7 +43,25 @@ $grades_result = mysqli_query($conn, $grades_query);
 if (!$grades_result) {
     die("Query failed: " . mysqli_error($conn));
 }
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $student_id = $_POST['student_id'];
+    $violation = $_POST['violation'];
+    $guard_id = $_SESSION['guard_id'];
 
+    $query = "INSERT INTO violations (student_id, violation, guard_id) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("isi", $student_id, $violation, $guard_id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        echo "<div class='alert alert-success' role='alert'>Violation reported successfully.</div>";
+    } else {
+        echo "<div class='alert alert-danger' role='alert'>Failed to report violation.</div>";
+    }
+
+    $stmt->close();
+}
 // Reset result set pointers
 mysqli_data_seek($sections_result, 0);
 mysqli_data_seek($grades_result, 0);
@@ -131,7 +149,7 @@ mysqli_data_seek($grades_result, 0);
 
     <!-- Report Modal -->
     <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
-        aria-hidden="true">
+        aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

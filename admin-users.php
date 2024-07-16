@@ -61,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['guard_first_name']) &&
     if (mysqli_num_rows($result) > 0) {
         $errorMessage = 'Error adding guard: Username already exists.';
     } else {
-        $addGuardSql = "INSERT INTO guards (first_name, last_name, username, password)
-                        VALUES ('$guardFirstName', '$guardLastName', '$guardUsername', '$guardPassword')";
+        $addGuardSql = "INSERT INTO guards (first_name, last_name, username, position, password)
+                        VALUES ('$guardFirstName', '$guardLastName', '$guardUsername','Guard', '$guardPassword')";
 
         if (mysqli_query($conn, $addGuardSql)) {
             $_SESSION['add_guard_success'] = true;
@@ -86,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['teacher_first_name']) 
     if (mysqli_num_rows($result) > 0) {
         $errorMessage = 'Error adding teacher: Username already exists.';
     } else {
-        $addTeacherSql = "INSERT INTO teachers (first_name, last_name, username, password)
-                        VALUES ('$teacherFirstName', '$teacherLastName', '$teacherUsername', '$teacherPassword')";
+        $addTeacherSql = "INSERT INTO teachers (first_name, last_name, username, password, position)
+                        VALUES ('$teacherFirstName', '$teacherLastName', '$teacherUsername', '$teacherPassword','Teacher')";
 
         if (mysqli_query($conn, $addTeacherSql)) {
             $_SESSION['add_teacher_success'] = true;
@@ -193,7 +193,7 @@ $personnelData = getAllPersonnelData($conn);
                         </div>
                         <div class="modal-body">
                             <!-- Form for adding a guard -->
-                            <form method="POST" action="admin-settings.php">
+                            <form method="POST" action="">
                                 <div class="form-group">
                                     <label for="guardFirstName">First Name</label>
                                     <input type="text" class="form-control" id="guardFirstName" name="guard_first_name" required>
@@ -229,7 +229,7 @@ $personnelData = getAllPersonnelData($conn);
                         </div>
                         <div class="modal-body">
                             <!-- Form for adding a teacher -->
-                            <form method="POST" action="admin-settings.php">
+                            <form method="POST" action="">
                                 <div class="form-group">
                                     <label for="teacherFirstName">First Name</label>
                                     <input type="text" class="form-control" id="teacherFirstName" name="teacher_first_name" required>

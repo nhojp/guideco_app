@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result_user->fetch_assoc();
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $username;
+        $_SESSION['user'] = true;
         $_SESSION['user_id'] = $user['id']; // Save user id in session
 
         // Redirect to student-index.php or refresh the current page to display user info
@@ -94,8 +95,7 @@ if (isset($_SESSION['loggedin'])) {
 
         if ($result_fetch_user->num_rows == 1) {
             $row_user = $result_fetch_user->fetch_assoc();
-            $first_name = $row_user['first_name'];
-            $last_name = $row_user['last_name'];
+
         }
     } elseif ($admin_id) {
         // Fetch admin data
