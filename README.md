@@ -18,12 +18,11 @@ Development of Guidance and Counseling Information Management System for Nasugbu
 - SMS Functionality (On going)
 - Calendar Scheduling
 - Chatbot (GuideBot)
-- Recommender (Descriptive Analytics)
+- Recommender (Analytics)
 ## Flow of Requirements
----
+- TBA
 ## Technolody Used
 - ChatGPT API
-- 
 ## How to run?
 - download this repo
 - open your xampp
