@@ -120,8 +120,8 @@ $personnelData = getAllPersonnelData($conn);
     }
 </style>
 
-<div class="container mt-2 mb-5">
-    <div class="container bg-white pt-4 rounded-lg">
+<div class="container-fluid mt-2 mb-5">
+    <div class="container-fluid bg-white pt-4 rounded-lg">
         <div class="row">
             <div class="col-md-4">
                 <h2 class="mb-4 font-weight-bold">Users</h2>
@@ -164,7 +164,7 @@ $personnelData = getAllPersonnelData($conn);
     <?php endif; ?>
 
 
-    <div class="container bg-white p-4 rounded-lg mt-2">
+    <div class="container-fluid bg-white p-4 rounded-lg mt-2">
 
         <div class="row ">
             <div class="col-md-6 ">

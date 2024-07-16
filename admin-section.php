@@ -101,8 +101,8 @@ $grades = getAllGradeNames($conn);
     }
 </style>
 
-<div class="container mt-2 mb-5">
-    <div class="container bg-white pt-4 rounded-lg">
+<div class="container-fluid mt-2 mb-5">
+    <div class="container-fluid bg-white pt-4 rounded-lg">
         <div class="row">
             <div class="col-md-4">
                 <h2 class="mb-4 font-weight-bold">Sections</h2>
@@ -143,7 +143,7 @@ $grades = getAllGradeNames($conn);
         </script>
     <?php endif; ?>
 
-    <div class="container bg-white p-4 rounded-lg mt-2">
+    <div class="container-fluid bg-white p-4 rounded-lg mt-2">
 <div class="row">
     <div class="col-md-12">
     <button type="button" class="btn btn-success btn-block p-4 mb-2" data-toggle="modal" data-target="#addSectionModal">

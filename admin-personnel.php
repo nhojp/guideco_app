@@ -80,9 +80,9 @@ include "admin-header.php"
 ?>
 
 
-<div class="container mt-2 mb-5">
-    <div class="container bg-white pt-4 rounded-lg">
-        <h2 class="pb-4 font-weight-bold">Complaint Form</h2>
+<div class="container-fluid mt-2 mb-5">
+    <div class="container-fluid bg-white pt-4 rounded-lg">
+        <h2 class="pb-4 font-weight-bold">Complaint Form Against School Personnel</h2>
     </div>
     <?php if (!empty($successMessage)) : ?>
         <div class="alert alert-success mt-4" role="alert">
@@ -91,7 +91,7 @@ include "admin-header.php"
     <?php endif; ?>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <!-- Victim Section -->
-        <div class="container bg-white p-4 rounded-lg mt-2">
+        <div class="container-fluid bg-white p-4 rounded-lg mt-2">
             <h4>A. Victim</h4>
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -141,7 +141,7 @@ include "admin-header.php"
             </div>
         </div>
 
-        <div class="container bg-white p-4 rounded-lg mt-4">
+        <div class="container-fluid bg-white p-4 rounded-lg mt-4">
 
             <h5>Parents:</h5>
             <div class="form-row">
@@ -184,7 +184,7 @@ include "admin-header.php"
             </div>
         </div>
 
-        <div class="container bg-white p-4 rounded-lg mt-4">
+        <div class="container-fluid bg-white p-4 rounded-lg mt-4">
 
             <!-- Complainant Section -->
             <h4>B. Complainant</h4>
@@ -218,7 +218,7 @@ include "admin-header.php"
             </div>
         </div>
 
-        <div class="container bg-white p-4 rounded-lg mt-4">
+        <div class="container-fluid bg-white p-4 rounded-lg mt-4">
 
             <!-- Person Complained Of Section -->
             <h4>C. School Personnel Complained Of</h4>
@@ -270,7 +270,7 @@ include "admin-header.php"
             </div>
         </div>
 
-        <div class="container bg-white p-4 rounded-lg mt-4">
+        <div class="container-fluid bg-white p-4 rounded-lg mt-4">
 
             <!-- Details of the Case Section -->
             <h4>II. Details of the Case</h4>

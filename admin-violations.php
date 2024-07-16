@@ -42,8 +42,8 @@ if (!$result) {
 }
 ?>
 
-<div class="container mt-2 mb-5">
-    <div class="container bg-white pt-4 rounded-lg">
+<div class="container-fluid mt-2 mb-5">
+    <div class="container-fluid bg-white pt-4 rounded-lg">
         <div class="row">
             <div class="col-md-6">
                 <h2 class="mb-4 font-weight-bold">Reported Violations</h2>
@@ -60,7 +60,7 @@ if (!$result) {
         </div>
     </div>
 
-    <div class="container bg-white pt-4 rounded-lg mt-2">
+    <div class="container-fluid bg-white pt-4 rounded-lg mt-2">
         <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="filter_grade">Filter by Grade:</label>
@@ -124,7 +124,7 @@ if (!$result) {
         </div>
     </div>
 
-    <div class="container bg-white p-4 rounded-lg mt-2">
+    <div class="container-fluid bg-white p-4 rounded-lg mt-2">
         <div class="table-responsive">
             <table id="violations_table" class="table table-bordered table-striped">
                 <thead>
