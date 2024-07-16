@@ -162,14 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
                                 </td>
                             </tr>
 
-                            <!-- View Modal -->
-                            <div class="modal fade" id="viewModal<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <!-- Modal content for viewing details goes here -->
-                                    </div>
-                                </div>
-                            </div>
+                            
 
                             <!-- Delete Modal -->
                             <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel<?php echo $row['id']; ?>" aria-hidden="true" data-backdrop="false">

@@ -488,7 +488,7 @@ if (isset($_SESSION['loggedin'])) {
 
                         <li class="app-sidebar__heading">Violations</li>
                         <li>
-                            <a href="dashboard-boxes.html">
+                            <a href="admin-violations.php">
                                 <i class="metismenu-icon fas fa-exclamation-triangle"></i>
                                 Major
                             </a>
