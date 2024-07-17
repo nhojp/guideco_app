@@ -258,4 +258,5 @@ if (!$result) {
         }
     });
 </script>
+
 <?php include "footer.php"; include "admin-footer.php"?>

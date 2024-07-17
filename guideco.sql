@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2024 at 07:38 PM
+-- Generation Time: Jul 17, 2024 at 03:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -175,6 +175,30 @@ INSERT INTO `complaints_student` (`id`, `victimFirstName`, `victimMiddleName`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fathers`
+--
+
+CREATE TABLE `fathers` (
+  `parent_id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fathers`
+--
+
+INSERT INTO `fathers` (`parent_id`, `student_id`, `name`, `contact_number`, `email`) VALUES
+(7, 3, 'magic johnson', '09289090230', 'magicjohnson@gmail.com'),
+(8, 3, 'magic johnson', '09289090230', 'magicjohnson@gmail.com'),
+(9, 3, 'magic johnson', '09289090230', 'magicjohnson@gmail.com'),
+(10, 3, 'magic johnson', '09289090230', 'magicjohnson@gmail.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `grades`
 --
 
@@ -220,29 +244,23 @@ INSERT INTO `guards` (`id`, `username`, `password`, `first_name`, `middle_name`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `parents`
+-- Table structure for table `mothers`
 --
 
-CREATE TABLE `parents` (
+CREATE TABLE `mothers` (
   `parent_id` int(11) NOT NULL,
   `student_id` int(11) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `contact_number` varchar(20) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `parent_type` enum('mother','father') DEFAULT NULL
+  `email` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `parents`
+-- Dumping data for table `mothers`
 --
 
-INSERT INTO `parents` (`parent_id`, `student_id`, `name`, `contact_number`, `email`, `parent_type`) VALUES
-(1, 1, 'lucia soro', '1234567890', 'mother1@example.com', 'mother'),
-(2, 1, 'Zoro soro', '9876543210', 'father1@example.com', 'father'),
-(3, 2, 'Mother 2 Name', '5554443333', 'mother2@example.com', 'mother'),
-(4, 2, 'Father 2 Name', '6667778888', 'father2@example.com', 'father'),
-(5, 3, 'Mother 3 Name', '9998887777', 'mother3@example.com', 'mother'),
-(6, 3, 'Father 3 Name', '3332221111', 'father3@example.com', 'father');
+INSERT INTO `mothers` (`parent_id`, `student_id`, `name`, `contact_number`, `email`) VALUES
+(6, 3, 'anastacia johnson', '09123787472', 'anastaciajohnson@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -297,7 +315,7 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`id`, `first_name`, `middle_name`, `last_name`, `age`, `sex`, `section_id`, `contact_number`, `religion`, `birthdate`, `user_id`) VALUES
 (1, 'John', 'Doe', '', 17, 'Male', 1, '1234567890', 'Christian', '2007-01-01', 1),
 (2, 'Jane', 'Marie', 'Smith', 16, 'Female', 2, '0987654321', 'Christian', '2008-02-01', 2),
-(3, 'Michael', 'Ray', 'Johnson', 18, 'Male', 3, '1122334455', 'Muslim', '2006-03-01', 3),
+(3, 'Michael', 'Ray', 'Johnson', 18, 'Male', 3, '0922334455', 'Muslim', '2006-03-01', 3),
 (157, 'Emma', 'Louise', 'Brown', 17, 'Female', 1, '09171234567', 'Catholic', '2007-04-15', 10),
 (158, 'William', 'Thomas', 'Jackson', 18, 'Male', 2, '09281234567', 'Christian', '2006-05-20', 11),
 (159, 'Sophia', 'Anne', 'Wilson', 17, 'Female', 3, '09391234567', 'Buddhist', '2007-06-25', 12),
@@ -313,30 +331,6 @@ INSERT INTO `students` (`id`, `first_name`, `middle_name`, `last_name`, `age`, `
 (169, 'Charlotte', 'Avery', 'Morales', 16, 'Female', 1, '09287901234', 'Catholic', '2008-02-14', 22),
 (170, 'Daniel', 'Owen', 'Rivera', 18, 'Male', 2, '09399012345', 'Christian', '2006-10-19', 23),
 (171, 'Liam', 'Carter', 'Santos', 17, 'Male', 3, '09178123456', 'Buddhist', '2007-08-26', 24);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student_parents`
---
-
-CREATE TABLE `student_parents` (
-  `student_id` int(11) NOT NULL,
-  `parent_id` int(11) NOT NULL,
-  `parent_type` enum('mother','father') NOT NULL DEFAULT 'mother'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `student_parents`
---
-
-INSERT INTO `student_parents` (`student_id`, `parent_id`, `parent_type`) VALUES
-(1, 1, 'mother'),
-(1, 2, 'father'),
-(2, 2, 'mother'),
-(2, 4, 'father'),
-(3, 3, 'mother'),
-(3, 6, 'father');
 
 -- --------------------------------------------------------
 
@@ -467,6 +461,13 @@ ALTER TABLE `complaints_student`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `fathers`
+--
+ALTER TABLE `fathers`
+  ADD PRIMARY KEY (`parent_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
 -- Indexes for table `grades`
 --
 ALTER TABLE `grades`
@@ -480,9 +481,9 @@ ALTER TABLE `guards`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `parents`
+-- Indexes for table `mothers`
 --
-ALTER TABLE `parents`
+ALTER TABLE `mothers`
   ADD PRIMARY KEY (`parent_id`),
   ADD KEY `student_id` (`student_id`);
 
@@ -500,13 +501,6 @@ ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
   ADD KEY `section_id` (`section_id`),
   ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `student_parents`
---
-ALTER TABLE `student_parents`
-  ADD PRIMARY KEY (`student_id`,`parent_id`),
-  ADD KEY `parent_id` (`parent_id`);
 
 --
 -- Indexes for table `teachers`
@@ -553,6 +547,12 @@ ALTER TABLE `complaints_student`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `fathers`
+--
+ALTER TABLE `fathers`
+  MODIFY `parent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
@@ -565,9 +565,9 @@ ALTER TABLE `guards`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `parents`
+-- AUTO_INCREMENT for table `mothers`
 --
-ALTER TABLE `parents`
+ALTER TABLE `mothers`
   MODIFY `parent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -605,10 +605,16 @@ ALTER TABLE `violations`
 --
 
 --
--- Constraints for table `parents`
+-- Constraints for table `fathers`
 --
-ALTER TABLE `parents`
-  ADD CONSTRAINT `parents_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
+ALTER TABLE `fathers`
+  ADD CONSTRAINT `fathers_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
+
+--
+-- Constraints for table `mothers`
+--
+ALTER TABLE `mothers`
+  ADD CONSTRAINT `mothers_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
 
 --
 -- Constraints for table `sections`
@@ -622,13 +628,6 @@ ALTER TABLE `sections`
 ALTER TABLE `students`
   ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`),
   ADD CONSTRAINT `students_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `student_parents`
---
-ALTER TABLE `student_parents`
-  ADD CONSTRAINT `student_parents_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
-  ADD CONSTRAINT `student_parents_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `parents` (`parent_id`);
 
 --
 -- Constraints for table `violations`
