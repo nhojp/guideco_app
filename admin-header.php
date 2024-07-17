@@ -486,15 +486,15 @@ if (isset($_SESSION['loggedin'])) {
                             </ul>
                         </li>
 
-                        <li class="app-sidebar__heading">Violations</li>
+                        <li class="app-sidebar__heading">TBA</li>
                         <li>
                             <a href="admin-violations.php">
                                 <i class="metismenu-icon fas fa-exclamation-triangle"></i>
-                                Major
+                                Violation List
                             </a>
-                            <a href="dashboard-boxes.html">
+                            <a href="admin-addstudent.php">
                                 <i class="metismenu-icon fas fa-exclamation-circle"></i>
-                                Minor
+                                Add Student
                             </a>
 
                         </li>

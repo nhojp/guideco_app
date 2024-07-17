@@ -57,7 +57,6 @@ if (!$result) {
 }
 ?>
 
-
 <div class="container-fluid mt-2 mb-5">
     <div class="container-fluid bg-white pt-4 rounded-lg">
         <div class="row">
@@ -157,7 +156,11 @@ if (!$result) {
                 </thead>
                 <tbody>
                     <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-                        <tr data-grade="<?php echo strtolower($row['grade_name']); ?>" data-section="<?php echo strtolower($row['section_name']); ?>" data-reported-by-type="<?php echo strtolower($row['reported_by_type']); ?>" data-reported-by-name="<?php echo strtolower($row['reported_by_name']); ?>" data-violation="<?php echo strtolower($row['violation']); ?>">
+                        <tr data-grade="<?php echo strtolower($row['grade_name']); ?>" 
+                            data-section="<?php echo strtolower($row['section_name']); ?>" 
+                            data-reported-by-type="<?php echo strtolower($row['reported_by_type']); ?>" 
+                            data-reported-by-name="<?php echo strtolower($row['reported_by_name']); ?>" 
+                            data-violation="<?php echo strtolower($row['violation']); ?>">
                             <td><?php echo ucfirst($row['first_name']) . ' ' . ucfirst($row['middle_name']) . ' ' . ucfirst($row['last_name']); ?></td>
                             <td><?php echo ucfirst($row['grade_name']); ?></td>
                             <td><?php echo ucfirst($row['section_name']); ?></td>
@@ -202,61 +205,67 @@ if (!$result) {
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.delete-violation').click(function() {
-            var deleteId = $(this).data('id');
-            $('#delete_id').val(deleteId);
-        });
+$(document).ready(function() {
+    // Bind events
+    $('#filter_grade, #filter_section, #filter_reported_by_type, #filter_violation').change(applyFilters);
+    $('#searchInput').on('input', onSearchInput);
+    $('.delete-violation').click(onDeleteButtonClick);
+    $('#confirmDeleteModal').on('hide.bs.modal', clearDeleteId);
+});
 
-        $('#confirmDeleteModal').on('hide.bs.modal', function() {
-            $('#delete_id').val('');
-        });
+function applyFilters() {
+    // Retrieve filter values
+    var gradeFilter = $('#filter_grade').val().toLowerCase();
+    var sectionFilter = $('#filter_section').val().toLowerCase();
+    var reportedByTypeFilter = $('#filter_reported_by_type').val().toLowerCase();
+    var violationFilter = $('#filter_violation').val().toLowerCase();
 
-        $('#searchInput').on('input', function() {
-            var searchTerm = $(this).val().toLowerCase();
+    // Iterate over table rows and apply filters
+    $('#violations_table tbody tr').each(function() {
+        var grade = $(this).data('grade').toLowerCase();
+        var section = $(this).data('section').toLowerCase();
+        var reportedByType = $(this).data('reported-by-type').toLowerCase();
+        var violation = $(this).data('violation').toLowerCase();
 
-            $('#violations_table tbody tr').each(function() {
-                var name = $(this).find('td:first').text().toLowerCase();
-                var violation = $(this).find('td:nth-child(4)').text().toLowerCase();
+        var gradeMatch = (gradeFilter === '' || grade === gradeFilter);
+        var sectionMatch = (sectionFilter === '' || section === sectionFilter);
+        var reportedByTypeMatch = (reportedByTypeFilter === '' || reportedByType === reportedByTypeFilter);
+        var violationMatch = (violationFilter === '' || violation.includes(violationFilter));
 
-                if (name.includes(searchTerm) || violation.includes(searchTerm)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-
-        $('#filter_grade, #filter_section, #filter_reported_by_type, #filter_violation').change(function() {
-            applyFilters();
-        });
-
-        function applyFilters() {
-            var gradeFilter = $('#filter_grade').val().toLowerCase();
-            var sectionFilter = $('#filter_section').val().toLowerCase();
-            var reportedByTypeFilter = $('#filter_reported_by_type').val().toLowerCase();
-            var violationFilter = $('#filter_violation').val().toLowerCase();
-
-            $('#violations_table tbody tr').each(function() {
-                var grade = $(this).data('grade');
-                var section = $(this).data('section');
-                var reportedByType = $(this).data('reported-by-type');
-                var violation = $(this).data('violation');
-
-                var gradeMatch = (gradeFilter === '' || grade === gradeFilter.toLowerCase());
-                var sectionMatch = (sectionFilter === '' || section === sectionFilter.toLowerCase());
-                var reportedByTypeMatch = (reportedByTypeFilter === '' || reportedByType === reportedByTypeFilter.toLowerCase());
-                var violationMatch = (violationFilter === '' || violation.includes(violationFilter));
-
-                if (gradeMatch && sectionMatch && reportedByTypeMatch && violationMatch) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
+        if (gradeMatch && sectionMatch && reportedByTypeMatch && violationMatch) {
+            $(this).show();
+        } else {
+            $(this).hide();
         }
     });
+}
+
+function onSearchInput() {
+    var searchTerm = $(this).val().toLowerCase();
+
+    $('#violations_table tbody tr').each(function() {
+        var name = $(this).find('td:first').text().toLowerCase();
+        var violation = $(this).find('td:nth-child(4)').text().toLowerCase();
+
+        if (name.includes(searchTerm) || violation.includes(searchTerm)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
+function onDeleteButtonClick() {
+    var deleteId = $(this).data('id');
+    $('#delete_id').val(deleteId);
+}
+
+function clearDeleteId() {
+    $('#delete_id').val('');
+}
 </script>
 
-<?php include "footer.php"; include "admin-footer.php"?>
+<?php include "footer.php"; include "admin-footer.php"; ?>

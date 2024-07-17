@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2024 at 03:54 AM
+-- Generation Time: Jul 17, 2024 at 10:08 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -282,11 +282,11 @@ CREATE TABLE `sections` (
 INSERT INTO `sections` (`id`, `section_name`, `grade_id`, `teacher_id`) VALUES
 (1, 'earth', 1, 8),
 (2, 'Venus', 1, 4),
-(3, 'C', 1, 9),
-(4, 'A', 2, 10),
-(5, 'B', 2, 11),
-(6, 'C', 2, 13),
-(7, 'Arigato', 2, 14);
+(3, 'Saturn', 1, 9),
+(4, 'Sampaguita', 2, 10),
+(5, 'Rose', 2, 11),
+(6, 'Sunflower', 2, 13),
+(7, 'Santan', 2, 14);
 
 -- --------------------------------------------------------
 
@@ -434,7 +434,8 @@ INSERT INTO `violations` (`id`, `student_id`, `violation`, `reported_at`, `guard
 (14, 157, 'Improper Haircut', '2024-07-16 16:55:36', 4, NULL),
 (15, 2, 'Cutting Classes', '2024-07-16 16:55:50', 4, NULL),
 (16, 157, 'Over the Bakod', '2024-07-16 16:55:56', 4, NULL),
-(17, 160, 'Littering', '2024-07-16 16:56:04', 4, NULL);
+(17, 160, 'Littering', '2024-07-16 16:56:04', 4, NULL),
+(18, 2, 'Over the Bakod', '2024-07-17 07:58:17', 4, NULL);
 
 --
 -- Indexes for dumped tables
@@ -598,7 +599,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `violations`
 --
 ALTER TABLE `violations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables

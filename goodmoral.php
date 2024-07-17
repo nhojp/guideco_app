@@ -6,6 +6,14 @@
         <title>Certificate of Good Moral Character</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="style-form.css">
+        <script>
+        // Function to trigger print dialog
+        function printPage() {
+            window.print();
+        }
+        // Call printPage function when the page loads
+        window.onload = printPage;
+    </script>
     </head>
 
     <body>
