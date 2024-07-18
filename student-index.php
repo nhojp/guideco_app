@@ -1,4 +1,6 @@
 <?php
+
+include "conn.php";
 // Start the session if it's not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -10,85 +12,152 @@ if (!isset($_SESSION['loggedin']) || !isset($_SESSION['user_id'])) {
     header('Location: index.php');
     exit;
 }
+
+if (isset($_SESSION['loggedin'])) {
+    $student_id = $_SESSION['user_id'] ?? null;
+
+    // Check if admin ID is set in session
+    if ($student_id) {
+        // Include database connection
+
+        // Fetch admin data based on admin_id
+        $sql = "SELECT 
+        s.id AS student_id, 
+        s.first_name, 
+        s.middle_name, 
+        s.last_name, 
+        sec.section_name, 
+        g.grade_name 
+    FROM students s
+    JOIN sections sec ON s.section_id = sec.id
+    JOIN grades g ON sec.grade_id = g.id
+    WHERE s.id = $student_id";
+        $result = $conn->query($sql);
+
+        if ($result && $result->num_rows == 1) {
+            // Fetch admin details
+            $row = $result->fetch_assoc();
+            $first_name = $row['first_name'];
+            $last_name = $row['last_name'];
+            $grade = $row['grade_name'];
+            $section = $row['section_name'];
+        } else {
+            // Handle case where admin data is not found
+            // You may set default values or handle this situation accordingly
+            $first_name = "Student"; // Example default value
+            $last_name = "";
+        }
+
+        // Fetch violation count for the student
+        $violation_count = 0; // Initialize violation count
+        $sql_violations = "SELECT COUNT(*) AS violation_count FROM violations WHERE student_id = $student_id";
+        $result_violations = $conn->query($sql_violations);
+
+        if ($result_violations && $result_violations->num_rows == 1) {
+            $row_violations = $result_violations->fetch_assoc();
+            $violation_count = $row_violations['violation_count'];
+        }
+
+        // Close database connection
+    } else {
+        // Handle case where admin ID is not set in session
+        echo "Teacher ID not set in session.";
+    }
+} else {
+    // Handle case where user/admin is not logged in
+    echo "User ID not set in session.";
+}
+include 'head.php';
 ?>
-    <?php include('head.php'); ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Student Dashboard</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Student Profile</h5>
-                        <p class="card-text">View and edit your student profile.</p>
-                        <a href="student-profile.php" class="btn btn-primary">Go to Profile</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Recommender</h5>
-                        <p class="card-text">Access the student recommender system.</p>
-                        <a href="student-recommender.php" class="btn btn-primary">Go to Recommender</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Good Moral</h5>
-                        <p class="card-text">Print good moral certificate.</p>
-                        <a href="goodmoral.php" class="btn btn-primary">Print Good Moral</a>
-                    </div>
-                </div>
-            </div>
+<style>
+  /* Adjust font size for smaller screens */
+  @media (max-width: 768px) {
+    .welcome-message {
+        font-size: 1.5rem; /* Adjust the font size as needed */
+    }
+}
+</style>
+<div class="container-fluid mt-4">
+    <div class="container-fluid pt-4 rounded-lg pl-4" id="animate-area">
+        <div class="row float-right mr-4">
+            <form action="logout.php">
+                <button class="bg-danger rounded-circle p-2">
+                    <i class="fa-solid fa-power-off"></i>
+                </button>
+            </form>
         </div>
-    </div>
-    <div class="container mt-5">
-        <div class="row">
-
-            
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">TBA</h5>
-                        <p class="card-text">To be announced.</p>
-                        <a href="#" class="btn btn-primary">TBA</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body text-danger">
-                        <h5 class="card-title">Logout</h5>
-                        <p class="card-text">Logout from the system.</p>
-                        <a href="logout.php" class="btn btn-primary">Logout</a>
-                    </div>
-                </div>
+        <div class="row justify-content-between">
+            <div class="col-md-12">
+                <h2 class="font-weight-bold welcome-message">
+                    Welcome, <b><?php echo ucwords($first_name . ' ' . $last_name . '!'); ?></b>
+                </h2>
+                <b><?php echo ucwords($grade . ' - ' . $section); ?></b><br>
+                <p class="pt-2"><b>
+                        <?php
+                        // Display violation count with badge color
+                        if ($violation_count == 0) {
+                            echo '<span class="badge badge-success">No Violations</span>';
+                        } elseif ($violation_count == 1 || $violation_count == 2) {
+                            echo '<span class="badge badge-warning">' . $violation_count . ' Violations</span>';
+                        } elseif ($violation_count >= 3) {
+                            echo '<span class="badge badge-danger">' . $violation_count . ' Violations</span>';
+                        }
+                        ?>
+                    </b></p>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <!-- ChatLing Widget Integration -->
-        <div id="chatling-embed-container"></div>
-        <script async data-id="7485494224" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    <div class="container-fluid bg-white">
+        <div class="row ">
+            <div class="container-fluid">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item w-30">
+                        <a class="nav-link active font-weight-bold text-dark" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item w-30">
+                        <a class="nav-link font-weight-bold text-dark" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                    </li>
+                    <li class="nav-item w-30">
+                        <a class="nav-link font-weight-bold text-dark" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Recommender</a>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
     </div>
 
-    <?php include('footer.php'); ?>
 
-</body>
+    <div class="container-fluid bg-white rounded-lg">
+        <div class="tab-content" id="myTabContent">
 
-</html>
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container-fluid bg-light pt-4 rounded-lg">
+                    <h1>Welcome to GuideCo!</h1>
+                    <h2>The Guidance and Counseling System of Nasugbu East Senior High School</h2>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <?php include "student-credentials.php" ?>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <h3>Recommender</h3>
+                <p>Content for Recommender tab.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <!-- ChatLing Widget Integration -->
+    <div id="chatling-embed-container"></div>
+    <script async data-id="7485494224" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+</div>
+
+<?php include('footer.php'); ?>

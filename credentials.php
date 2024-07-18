@@ -51,11 +51,17 @@ if ($role && $role_id) {
             $last_name = $_POST['last_name'];
             $email = $_POST['email'];
             $position = $_POST['position'];
+            $birthdate = isset($_POST['birthdate']) ? $_POST['birthdate'] : ''; // Initialize $birthdate with default value or empty string
+            $sex = isset($_POST['sex']) ? $_POST['sex'] : ''; // Initialize $sex with default value or empty string
+            $contact_number = isset($_POST['contact_number']) ? $_POST['contact_number'] : ''; // Initialize $contact_number with default value or empty string
+            $address = isset($_POST['address']) ? $_POST['address'] : ''; // Initialize $address with default value or empty string
 
             // Update query
             $update_sql = "UPDATE $table_name SET username = '$username', password = '$password', 
                            first_name = '$first_name', middle_name = '$middle_name', 
-                           last_name = '$last_name', email = '$email', position = '$position' 
+                           last_name = '$last_name', email = '$email', position = '$position', 
+                           birthdate = '$birthdate', sex = '$sex', contact_number = '$contact_number',
+                           address = '$address'
                            WHERE id = $id";
 
             if ($conn->query($update_sql) === TRUE) {
@@ -67,6 +73,10 @@ if ($role && $role_id) {
                 $user['last_name'] = $last_name;
                 $user['email'] = $email;
                 $user['position'] = $position;
+                $user['birthdate'] = $birthdate;
+                $user['sex'] = $sex;
+                $user['contact_number'] = $contact_number;
+                $user['address'] = $address;
                 $_SESSION['edit_user'] = $user;
             } else {
                 $error_message = "Error updating credentials: " . $conn->error;
@@ -80,6 +90,7 @@ if ($role && $role_id) {
     // Handle case where role or role_id is not set in session
     $error_message = ucfirst($role) . " ID not set in session.";
 }
+
 
 // Include header and other necessary files based on role
 include "head.php";
@@ -170,6 +181,42 @@ if ($role == 'admin') {
                         </div>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="birthdate">Birthdate</label>
+                            <input type="date" class="form-control" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($user['birthdate']); ?>" required>
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="sex">Sex</label>
+                            <div class="form-group">
+    <select class="form-control" id="sex" name="sex">
+        <option value="Male" <?php if ($user['sex'] == 'Male') echo 'selected'; ?>>Male</option>
+        <option value="Female" <?php if ($user['sex'] == 'Female') echo 'selected'; ?>>Female</option>
+    </select>
+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="contact_number">Contact Number</label>
+                            <input type="text" class="form-control" id="contact_number" name="contact_number" value="<?php echo htmlspecialchars($user['contact_number']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" value="<?php echo htmlspecialchars($user['address']); ?>">
+                        </div>
+                    </div>
+                </div>
+
 
                 <button type="submit" class="btn btn-primary" name="update">Update</button>
             </form>

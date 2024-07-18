@@ -92,10 +92,22 @@ if (isset($_SESSION['loggedin'])) {
         // Fetch user data
         $sql_fetch_user = "SELECT * FROM users WHERE id = $user_id";
         $result_fetch_user = $conn->query($sql_fetch_user);
-
+    
         if ($result_fetch_user->num_rows == 1) {
             $row_user = $result_fetch_user->fetch_assoc();
+    
+            // Fetch student's first name and last name from students table
+            $sql_fetch_student = "SELECT s.first_name, s.last_name 
+                                  FROM students s
+                                  WHERE s.user_id = $user_id";
+            $result_fetch_student = $conn->query($sql_fetch_student);
+    
+            if ($result_fetch_student->num_rows == 1) {
+                $row_student = $result_fetch_student->fetch_assoc();
 
+                $first_name = $row_student['first_name'];
+                $last_name = $row_student['last_name'];
+            }
         }
     } elseif ($admin_id) {
         // Fetch admin data

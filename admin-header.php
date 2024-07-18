@@ -85,10 +85,10 @@ if (isset($_SESSION['loggedin'])) {
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                                     <div class="widget-content-left  ml-3 header-user-info">
                                         <div class="widget-heading">
-                                            <?php echo $first_name . ' ' . $last_name; ?>
+                                            <?php echo ucwords($first_name) . ' ' . ucwords($last_name); ?>
                                         </div>
                                         <div class="widget-subheading">
-                                            <?php echo $position; ?>
+                                            <?php echo ucwords($position); ?>
                                         </div>
                                     </div>
                                 </a>
@@ -450,7 +450,7 @@ if (isset($_SESSION['loggedin'])) {
 
                             <ul>
                                 <li>
-                                    <a href="admin-personnel.php">
+                                    <a href="admin-p-1.php">
                                         <i class="metismenu-icon"></i>
                                         Against School Personnel
                                     </a>
@@ -494,7 +494,7 @@ if (isset($_SESSION['loggedin'])) {
                             </a>
                             <a href="admin-addstudent.php">
                                 <i class="metismenu-icon fas fa-exclamation-circle"></i>
-                                Add Student
+                                Student List
                             </a>
 
                         </li>

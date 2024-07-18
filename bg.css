@@ -1,0 +1,21 @@
+@keyframes animatedBackground {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
+  }
+  
+  #animate-area {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 200px;
+    background-image: url(https://davidwalsh.name/demo/bg-clouds.png);
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    animation: animatedBackground 40s linear infinite;
+  }
+  /*------- for more tutorials visit www.twoclock.com*/
+  
