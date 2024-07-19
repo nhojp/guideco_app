@@ -112,7 +112,7 @@ if ($result_person->num_rows > 0) {
 // Prepare and execute SQL INSERT Query
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Fetch data for student and personnel
-    
+
     // Victim Details
     $student_first_name = $row['student_first_name'] ?? '';
     $middle_name = $row['middle_name'] ?? '';
@@ -276,155 +276,228 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include "admin-header.php";
 ?>
 
-<div class="container mt-5">
-    <form action="" method="post">
-        <h3>Complaint Details</h3>
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <h4>Victim Details</h4>
-                <table class="table">
-                    <tbody>
-                        <?php if ($result_student_teacher->num_rows > 0) : ?>
-                            <?php $row = $result_student_teacher->fetch_assoc(); ?>
-                            <tr>
-                                <td><strong>First Name:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($student_first_name); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Middle Name:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($middle_name); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Grade:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($grade_name); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Section:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($section_name); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Teacher:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($teacher_name); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mother Name:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_name); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mother Occupation:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_occupation); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mother Address:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_address); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mother Contact:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_contact); ?>" readonly></td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+<div class="container-fluid mt-2 mb-5">
+    <div class="container-fluid bg-white pt-4 rounded-lg">
+        <div class="row">
+            <div class="col-md-4">
+                <h2 class="mb-4 font-weight-bold">Complaint Details</h2>
             </div>
-            <div class="col-md-6">
-                <h4>Offender Details</h4>
-                <table class="table">
-                    <tbody>
-                        <?php if (isset($person)) : ?>
-                            <tr>
-                                <td><strong>First Name:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($person['first_name']); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Middle Name:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($person['middle_name']); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Designation:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars(ucfirst($person_type)); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Birthdate:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($person['birthdate']); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Sex:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($person['sex']); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Contact:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($person['contact_number']); ?>" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Address:</strong></td>
-                                <td><input type="text" class="form-control" value="<?php echo htmlspecialchars($person['address']); ?>" readonly></td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-
-        <div class="container-fluid bg-white p-4 rounded-lg mt-4">
-
-            <!-- Complainant Section -->
-            <h4>B. Complainant</h4>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="complainantFirstName">First Name:</label>
-                    <input type="text" class="form-control" id="complainantFirstName" name="complainantFirstName">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="complainantMiddleName">Middle Name:</label>
-                    <input type="text" class="form-control" id="complainantMiddleName" name="complainantMiddleName">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="complainantLastName">Last Name:</label>
-                    <input type="text" class="form-control" id="complainantLastName" name="complainantLastName">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="relationshipToVictim">Relationship to Victim:</label>
-                <input type="text" class="form-control" id="relationshipToVictim" name="relationshipToVictim">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="complainantContact">Contact Number:</label>
-                    <input type="text" class="form-control" id="complainantContact" name="complainantContact">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="complainantAddress">Address:</label>
-                    <input type="text" class="form-control" id="complainantAddress" name="complainantAddress">
+            <div class="col-md-8">
+                <div class="search-wrapper float-right">
+                    <div class="input-holder">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Type to search">
+                        <button class="search-icon"><span></span></button>
+                    </div>
+                    <button class="close"></button>
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white p-4 rounded-lg mt-4">
+    </div>
 
-            <!-- Details of the Case Section -->
-            <h4>II. Details of the Case</h4>
-            <div class="form-group">
-                <label for="caseDetails">Details of the Case:</label>
-                <textarea class="form-control" id="caseDetails" name="caseDetails" rows="5"></textarea>
-            </div>
+    <div class="container-fluid bg-white pt-4 mt-2 rounded-lg">
+        <h5 class="text-center bg-dark text-white p-2"><b>Victim Details</b></h5>
+        <form action="" method="post">
+            <?php if ($result_student_teacher->num_rows > 0) : ?>
+                <?php $row = $result_student_teacher->fetch_assoc(); ?>
 
-            <!-- Action Taken Section -->
-            <h4>III. Action Taken</h4>
-            <div class="form-group">
-                <label for="actionTaken">Action Taken:</label>
-                <textarea class="form-control" id="actionTaken" name="actionTaken" rows="5"></textarea>
-            </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>First Name:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($student_first_name); ?>" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Middle Name:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($middle_name); ?>" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Last Name:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($last_name); ?>" readonly>
+                    </div>
+                </div>
 
-            <!-- Recommendations Section -->
-            <h4>IV. Recommendations</h4>
-            <div class="form-group">
-                <label for="recommendations">Recommendations:</label>
-                <textarea class="form-control" id="recommendations" name="recommendations" rows="5"></textarea>
-            </div>
+                <div class="row mt-3">
+                    <div class="col-md-8"><strong>Date of Birth:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($birthdate); ?>" readonly>
+                    </div>
+
+                    <div class="col-md-4"><strong>Sex:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($sex); ?>" readonly>
+                    </div>
+
+                </div>
+
+                <div class="row mt-3 pb-4">
+                    <div class="col-md-3"><strong>Grade:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($grade_name); ?>" readonly>
+                    </div>
+                    <div class="col-md-3"><strong>Section:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($section_name); ?>" readonly>
+                    </div>
+                    <div class="col-md-6"><strong>Adviser:</strong>
+                        <input type="text" class="form-control" value="<?php echo htmlspecialchars($teacher_name); ?>" readonly>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="container-fluid">
+                            <h5 class="text-center"><b>Mother</b></h5>
+                            <div class="row">
+                                <strong>Name:</strong>
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_name); ?>" readonly>
+                            </div>
+                            <div class="row mt-3"><strong>Occupation:</strong>
+
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_occupation); ?>" readonly>
+                            </div>
+                            <div class="row mt-3"><strong>Address:</strong>
+
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_address); ?>" readonly>
+                            </div>
+                            <div class="row mt-3"><strong>Contact:</strong>
+
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($mother_contact); ?>" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="container-fluid">
+                            <h5 class="text-center"><b>Father</b></h5>
+                            <div class="row">
+                                <strong>Name:</strong>
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($father_name); ?>" readonly>
+                            </div>
+                            <div class="row mt-3"><strong>Occupation:</strong>
+
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($father_occupation); ?>" readonly>
+                            </div>
+                            <div class="row mt-3"><strong>Address:</strong>
+
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($father_address); ?>" readonly>
+                            </div>
+                            <div class="row mt-3"><strong>Contact:</strong>
+
+                                <input type="text" class="form-control" value="<?php echo htmlspecialchars($father_contact); ?>" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+<?php endif; ?>
+
+<div class="container-fluid bg-white pt-4 mt-2 rounded-lg">
+    <h5 class="text-center bg-dark text-white p-2"><b>Offender Details</b></h5>
+    <?php if (isset($person)) : ?>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <strong>First Name:</strong>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['first_name']); ?>" readonly>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg mt-4">Submit</button>
+        <div class="col-md-4">
+            <strong>Middle Name:</strong>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['middle_name']); ?>" readonly>
+        </div>
+        <div class="col-md-4">
+            <strong>Last Name:</strong>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['last_name']); ?>" readonly>
+        </div>
+    </div>
 
-    </form>
+    <div class="row mt-3">
+        <div class="col-md-8"><strong>Date of Birth:</strong>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['birthdate']); ?>" readonly>
+        </div>
+
+        <div class="col-md-4"><strong>Sex:</strong>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['sex']); ?>" readonly>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-12"><strong>Designation/Position:</strong>
+            <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['position']); ?>" readonly>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+        <strong>Address:</strong>
+        <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['address']); ?>" readonly>
+        </div>
+        <div class="col-md-6"><strong>Contact:</strong>
+        <input type="text" class="form-control" value="<?php echo htmlspecialchars($person['contact_number']); ?>" readonly></div>
+
+    </div>
+    <?php endif; ?>
+
+</div>
+
+
+
+
+<div class="container-fluid bg-white p-4 rounded-lg mt-4">
+
+    <!-- Complainant Section -->
+    <h4>B. Complainant</h4>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="complainantFirstName">First Name:</label>
+            <input type="text" class="form-control" id="complainantFirstName" name="complainantFirstName">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="complainantMiddleName">Middle Name:</label>
+            <input type="text" class="form-control" id="complainantMiddleName" name="complainantMiddleName">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="complainantLastName">Last Name:</label>
+            <input type="text" class="form-control" id="complainantLastName" name="complainantLastName">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="relationshipToVictim">Relationship to Victim:</label>
+        <input type="text" class="form-control" id="relationshipToVictim" name="relationshipToVictim">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="complainantContact">Contact Number:</label>
+            <input type="text" class="form-control" id="complainantContact" name="complainantContact">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="complainantAddress">Address:</label>
+            <input type="text" class="form-control" id="complainantAddress" name="complainantAddress">
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-white p-4 rounded-lg mt-4">
+
+    <!-- Details of the Case Section -->
+    <h4>II. Details of the Case</h4>
+    <div class="form-group">
+        <label for="caseDetails">Details of the Case:</label>
+        <textarea class="form-control" id="caseDetails" name="caseDetails" rows="5"></textarea>
+    </div>
+
+    <!-- Action Taken Section -->
+    <h4>III. Action Taken</h4>
+    <div class="form-group">
+        <label for="actionTaken">Action Taken:</label>
+        <textarea class="form-control" id="actionTaken" name="actionTaken" rows="5"></textarea>
+    </div>
+
+    <!-- Recommendations Section -->
+    <h4>IV. Recommendations</h4>
+    <div class="form-group">
+        <label for="recommendations">Recommendations:</label>
+        <textarea class="form-control" id="recommendations" name="recommendations" rows="5"></textarea>
+    </div>
+</div>
+<button type="submit" class="btn btn-primary btn-lg mt-4">Submit</button>
+
+</form>
 </div>
 
 <?php
